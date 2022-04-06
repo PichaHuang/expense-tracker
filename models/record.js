@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 const recordSchema = new Schema({
   name: {
     type: String,
-    required: true // 這是個必填欄位
+    required: true
   },
   date: {
     type: Date,
@@ -13,18 +13,18 @@ const recordSchema = new Schema({
     type: Number,
     required: true
   },
-  /*userId: {         // 加入關聯設定
+  /*userId: {         
     type: Schema.Types.ObjectId,
     ref: 'User',
     index: true,
     required: true
-  },
+  }, 
   categoryId: {
     type: Schema.Types.ObjectId,
     ref: 'Category',
     index: true,
-    required: true 
-} */
+    required: true
+  }*/
 })
 
 

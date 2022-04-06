@@ -1,14 +1,31 @@
 <select class="form-select" aria-label="Default select example">
   <option selected>類別</option>
   {{#each categories}}
-  <option value="{{this.name}}">{{this.name}}</option>
+  <option value="{{ this.name }}">{{ this.name }}</option>
   {{/each}}
 </select>
 
 <ul>
   {{#each records}}
-  <li>
-    {{this.name}}
+  <li class="list-group-item">
+    <div class="row justify-content-between">
+      <div class="col-auto mr-auto">
+        <h5 style="display: inline; vertical-align: middle;">
+          {{ this.name }}
+        </h5>
+        <h5 style="display: inline; vertical-align: middle;">
+          {{ this.amount }}
+        </h5>
+      </div>
+      <div class="col-auto">
+        <a class="btn btn-success" href="./records/{{ this._id }}/edit">修改</a>
+        <form action="./records/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
+          <button class="btn btn-danger" type="submit">刪除</button>
+        </form>
+      </div>
+    </div>
   </li>
   {{/each}}
 </ul>
+
+<a href="./records/new">新增支出</a>

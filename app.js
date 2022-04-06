@@ -1,10 +1,13 @@
-const Record = require('./models/record')
-const Category = require('./models/category')
 const express = require('express')
-const app = express()
-const PORT = 3000
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
+const bodyParser = require('body-parser')
+
+const Record = require('./models/record')
+const Category = require('./models/category')
+
+const app = express()
+const PORT = 3000
 
 
 
@@ -20,7 +23,7 @@ db.once('open', () => {
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
-
+app.use(bodyParser.urlencoded({ extended: true }))
 
 
 app.get('/', (req, res) => {
@@ -35,9 +38,26 @@ app.get('/', (req, res) => {
 
     })
     .catch(error => console.error(error))
-
-
 })
+
+
+app.get('/records/new', (req, res) => {
+  return res.render('new')
+})
+
+app.post('/records', (req, res) => {
+  const { name, date, categoryId, amount } = req.body
+  console.log(req.body)
+  return Record.create({
+    name,
+    date,
+    categoryId,
+    amount
+  })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
 
 
 
