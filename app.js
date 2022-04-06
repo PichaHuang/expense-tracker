@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const PORT = 3000
 const mongoose = require('mongoose')
+const exphbs = require('express-handlebars')
 
 
 
@@ -15,9 +16,13 @@ db.once('open', () => {
 })
 
 
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.set('view engine', 'hbs')
+
+
 
 app.get('/', (req, res) => {
-  res.send('hello world')
+  res.render('index')
 })
 
 app.listen(PORT, () => {
