@@ -9,10 +9,13 @@ db.on('error', () => {
 })
 db.once('open', () => {
   console.log('mongodb connected!')
-  Record.create({
-    name: '午餐',
-    amount: 200
-  })
+  for (let i = 0; i < 10; i++) {
+    Record.create({
+      name: `午餐-${i}`,
+      amount: 200
+    })
+  }
+
   console.log('done')
 })
 

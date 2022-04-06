@@ -1,3 +1,5 @@
+const Record = require('./models/record')
+const Category = require('./models/category')
 const express = require('express')
 const app = express()
 const PORT = 3000
@@ -22,8 +24,23 @@ app.set('view engine', 'hbs')
 
 
 app.get('/', (req, res) => {
-  res.render('index')
+  Record.find()
+    .lean()
+    .then((records) => {
+      Category.find()
+        .lean()
+        .then((categories) => {
+          return res.render('index', { records, categories })
+        })
+
+    })
+    .catch(error => console.error(error))
+
+
 })
+
+
+
 
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)
