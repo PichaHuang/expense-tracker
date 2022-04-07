@@ -5,13 +5,16 @@ const Category = require('../../models/category')
 
 // 首頁
 router.get('/', (req, res) => {
-  Record.find()
+  const userId = req.user._id
+
+
+  Record.find({ userId })
     .lean()
     .then((records) => {
       Category.find()
         .lean()
-        .then((categories) => {
-          return res.render('index', { records, categories })
+        .then(() => {
+          return res.render('index', { records })
         })
 
     })
