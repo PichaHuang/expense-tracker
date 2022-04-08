@@ -20,7 +20,7 @@ router.get('/:sort', async (req, res) => {
       return res.render('index', { records, totalAmount })
     })
     .catch(error => console.error(error))
-    
+
 })
 
 

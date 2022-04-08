@@ -15,6 +15,9 @@ router.post('/', (req, res) => {
   const categoryName = data.categoryName
   console.log(req.body)
 
+
+
+
   return Category.findOne({ name: categoryName })
     .then(category => {
       data.categoryId = category._id
