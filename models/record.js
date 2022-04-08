@@ -6,8 +6,10 @@ const recordSchema = new Schema({
     required: true
   },
   date: {
-    type: Date,
-    default: Date.now
+    type: String,
+    default: function () {
+      return new Date().toISOString().split('T')[0]    // 只擷取年月日
+    }
   },
   amount: {
     type: Number,
@@ -23,7 +25,11 @@ const recordSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Category',
     index: true,
-    required: false
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 })
 

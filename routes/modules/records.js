@@ -11,37 +11,55 @@ router.get('/new', (req, res) => {
 
 router.post('/', (req, res) => {
   const userId = req.user._id
-  const { name, date, amount } = req.body
+  const data = req.body
+  const categoryName = data.categoryName
   console.log(req.body)
-  return Record.create({
-    name,
-    date,
-    amount,
-    userId
-  })
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
+
+  return Category.findOne({ name: categoryName })
+    .then(category => {
+      data.categoryId = category._id
+      data.userId = userId
+      return Record.create(data)
+        .then(() => res.redirect('/'))
+        .catch(error => console.log(error))
+    })
+
 })
 
 // 修改
 router.get('/:id/edit', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
-  return Record.findById({ _id, userId })
+  return Record.findOne({ _id, userId })
     .lean()
-    .then((record) => res.render('edit', { record }))
-    .catch(error => console.log(error))
+    .then(record => {
+      return Category.find({}, { name: 1, _id: 1 })
+        .lean()
+        .then(categories => {
+          const categorySelect = categories.find((category) => {
+            return category._id.toString() === record.categoryId.toString()
+          })
+          categories = categories.filter(item => {
+            return item.name !== categorySelect.name
+          })
+          return res.render('edit', { record, categories, categorySelect: categorySelect.name })
+        })
+    })
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
-  const { name, date, amount } = req.body
-  return Record.findById({ _id, userId })
+  const data = req.body
+  const categoryName = req.body.categoryName
+  const category = await Category.findOne({ name: categoryName }).lean()
+  data.categoryId = category._id
+
+  return Record.findOne({ _id, userId })
     .then(record => {
-      record.name = name
-      record.date = date
-      record.amount = amount
+      record.name = data.name
+      record.amount = data.amount
+      record.categoryId = data.categoryId
       return record.save()
     })
     .then(() => res.redirect('/'))

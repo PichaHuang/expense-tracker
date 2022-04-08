@@ -1,34 +1,58 @@
-<div class="justify-content-center">
-  <select class="form-select" aria-label="Default select example">
-    <option selected>類別</option>
-    {{#each categories}}
-    <option value="{{ this.name }}">{{ this.name }}</option>
-    {{/each}}
-  </select>
+<div class="dropdown">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+    aria-expanded="false">
+    類別
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <li><a class="dropdown-item" href="/sort/家居物業">家居物業</a></li>
+    <li><a class="dropdown-item" href="/sort/交通出行">交通出行</a></li>
+    <li><a class="dropdown-item" href="/sort/休閒娛樂">休閒娛樂</a></li>
+    <li><a class="dropdown-item" href="/sort/餐飲食品">餐飲食品</a></li>
+    <li><a class="dropdown-item" href="/sort/其他">其他</a></li>
+  </ul>
+</div>
 
-  <ul>
-    {{#each records}}
-    <li class="list-group-item">
+
+<div class="total">
+  <div class="row">
+    <div class="col-3">
+      <h3>總金額：</h3>
+    </div>
+    <div class="col-3">
+      <h3>{{ totalAmount }} 元</h3>
+    </div>
+  </div>
+</div>
+
+
+<ul>
+  {{#each records}}
+  <li class="list-group-item">
+    <div class="container">
       <div class="row justify-content-between">
-        <div class="col-auto mr-auto">
-          <h5 style="display: inline; vertical-align: middle;">
-            {{ this.name }}
-          </h5>
-          <h5 style="display: inline; vertical-align: middle;">
-            {{ this.amount }}
-          </h5>
+        <div class="col">
+          <i class="{{ this.categoryId.icon }} fa-4x"></i>
+          <p>{{ this.categoryId.name }}</p>
         </div>
-        <div class="col-auto">
+        <div class="col">
+          <p> {{ this.name }} </p>
+          <p> {{ this.date }} </p>
+        </div>
+        <div class="col">
+          {{ this.amount }}
+        </div>
+        <div class="col">
           <a class="btn btn-success" href="./records/{{ this._id }}/edit">修改</a>
+        </div>
+        <div class="col">
           <form action="./records/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
             <button class="btn btn-danger" type="submit">刪除</button>
           </form>
         </div>
       </div>
-    </li>
-    {{/each}}
-  </ul>
+    </div>
+  </li>
+  {{/each}}
+</ul>
 
-  <a class="btn btn-outline-light" style="background-color: #da710e;" href="/records/new">新增支出</a>
-
-</div>
+<a class="btn btn-outline-light" style="background-color: #da710e;" href="/records/new">新增支出</a>
