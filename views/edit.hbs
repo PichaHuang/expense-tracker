@@ -8,11 +8,11 @@
     <input type="date" class="form-control" id="date" name="date" value="{{ record.date }}" required>
   </div>
   <div class="mb-3">
-    <label for="category" class="form-label">類別<span class="text-danger">*</span></label>
-    <select name="categoryId" id="categoryId">
-      <option selected>Select</option>
+    <label for="categoryName" class="form-label">類別<span class="text-danger">*</span></label>
+    <select name="categoryName" id="categoryName">
+      <option value="{{ categorySelect }}" selected="selected">{{ categorySelect }}</option>
       {{#each categories}}
-      <option value="{{ category.name }}">{{ category.name }}</option>
+      <option value="{{ this.name }}">{{ this.name }}</option>
       {{/each}}
     </select>
   </div>

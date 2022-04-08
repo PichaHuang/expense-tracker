@@ -3,11 +3,13 @@ const router = express.Router()
 const home = require('./modules/home')
 const records = require('./modules/records')
 const users = require('./modules/users')
+const sort = require('./modules/sort')
 const { authenticator } = require('../middleware/auth')
 
 
 
 router.use('/records', authenticator, records)
+router.use('/sort', authenticator, sort)
 router.use('/users', users)
 router.use('/', authenticator, home)
 

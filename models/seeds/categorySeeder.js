@@ -1,13 +1,13 @@
-const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const Category = require('../category')
 const categoryList = require('./categoryList.json').results
+const db = require('../../config/mongoose')
 
 
-mongoose.connect('mongodb://localhost/expense-tracker', { useNewUrlParser: true, useUnifiedTopology: true })
-const db = mongoose.connection
-db.on('error', () => {
-  console.log('mongodb error!')
-})
 db.once('open', () => {
   console.log('mongodb connected!')
   return Promise.all(Array.from(
@@ -19,7 +19,7 @@ db.once('open', () => {
     }
   ))
     .then(() => {
-      console.log('categorySeeder done!')
+      console.log('category seeder done!')
       process.exit()
     })
 
