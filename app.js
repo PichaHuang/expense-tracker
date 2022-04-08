@@ -17,7 +17,7 @@ const usePassport = require('./config/passport')
 require('./config/mongoose')
 
 const app = express()
-const PORT = process.env.PORT
+const PORT = process.env.PORT  || 3000
 
 
 
